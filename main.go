@@ -31,16 +31,11 @@ Fill out document, make video final clean up and formfitting.
 package main
 import "fmt"
 
-// TODO step one how to store the boards and ships
-//      boards can be a 2d int array
-// NOTE make a struct that holds pl
-// 10 x 10 board
-
 type Player struct {
-    Designation string
+    Name string
     Ships = []Ships
-    Board = [][]int
-    Radar = [][]int
+    Board = [10][10]int
+    Radar = [10][10]int
 }
 
 type Postion struct {
