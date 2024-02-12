@@ -31,6 +31,37 @@ Fill out document, make video final clean up and formfitting.
 package main
 import "fmt"
 
+// TODO step one how to store the boards and ships
+//      boards can be a 2d int array
+// NOTE make a struct that holds pl
+// 10 x 10 board
+
+type Player struct {
+    Designation string
+    Ships = []Ships
+    Board = [][]int
+    Radar = [][]int
+}
+
+type Postion struct {
+    X int
+    Y int
+}
+
+ype ShipType string
+const (
+  ShipTypeDestroyer  ShipType = "Destroyer"
+  ShipTypeBattleship ShipType = "Battleship"
+  ShipTypeSubmarine ShipType = "Submarine"
+  ShipTypeCarrier   ShipType = "Carrier"
+)
+
+type Ship struct {
+    Postions = []Postion
+    Model string
+    IsSunk bool
+}
+
 func main() {
     fmt.Println("Hello, World!")
 }
