@@ -99,7 +99,7 @@ func main() {
         twoPlayerGame()
 
     } else if playerMode == 3 {
-        return 0
+        return
 
     } 
 }
