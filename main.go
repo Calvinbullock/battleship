@@ -117,17 +117,6 @@ func displayMainMenu() int {
     return playerMode
 }
 
-// onePLayerGame contains the game loop for a single player game.
-func onePlayerGame() {
-    // create player 1
-
-    // create computer
-
-    for true {
-        // playerMove(player1, computer)
-    }
-}
-
 // returns the list of default ships
 func makeShipsList() []Ship {
     pos := Position{0, 0, false}
@@ -141,6 +130,17 @@ func makeShipsList() []Ship {
 
     ships := []Ship{carrier, battleShip, cruiser, cruiser, submarine, submarine, destroyer, destroyer}
     return ships
+}
+
+// onePLayerGame contains the game loop for a single player game.
+func onePlayerGame() {
+    // create player 1
+
+    // create computer
+
+    for true {
+        // playerMove(player1, computer)
+    }
 }
 
 // twoPLayerGame contains the game loop for a two player game.
