@@ -106,7 +106,7 @@ func main() {
 
 // displayMainMenu is the first menu displayed when running the program.
 //      returns playerMode, the users game mode choice.
-func displayMainMenu() {
+func displayMainMenu() int {
     // TODO input validation.
     var playerMode int
     fmt.Println("1. Single Player")
