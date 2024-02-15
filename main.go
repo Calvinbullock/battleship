@@ -128,19 +128,39 @@ func onePlayerGame() {
     }
 }
 
+// returns the list of default ships
+func makeShipsList() []Ship {
+    pos := Position{0, 0, false}
+    
+    // create defult ships with blank positions.
+    carrier := Ship{[]Position{pos, pos, pos, pos, pos}, "carrier", false}
+    battleShip := Ship{[]Position{pos, pos, pos, pos}, "battleShip", false}
+    cruiser := Ship{[]Position{pos, pos, pos}, "cruiser", false}
+    submarine := Ship{[]Position{pos, pos, pos}, "submarine", false}
+    destroyer := Ship{[]Position{pos, pos, pos}, "destryoer", false}
+
+    ships := []Ship{carrier, battleShip, cruiser, cruiser, submarine, submarine, destroyer, destroyer}
+    return ships
+}
+
 // twoPLayerGame contains the game loop for a two player game.
 func twoPlayerGame() {
-    // create player 1
-    // TODO build players - have players place boats.
+    // arrays in golang passed by value.
+    board := [10][10]int{}
+    radar := [10][10]int{}
+    ships := makeShipsList()
 
+    // create player 1
+    p1 := Player{"player1", ships, board, radar}
+    p2 := Player{"player2", ships, board, radar}
+    
     // create player 2
 
     for true {
-        // playerMove(player1, player2)
-        // playerMove(player2, player1)
+        playerMove(p1, p2)
+        playerMove(p2, p1)
     }
 }
-
 
 func displayBoard(player Player) {
     board := player.board
