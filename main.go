@@ -25,12 +25,14 @@ Start computer player if time, if not work on fixing bugs and finishing minimum 
 Find good algorithms used by battleship players for the computer.
 More computer player work and clean up, QA
 Fill out document, make video final clean up and formfitting.
-
 */
 
 package main
 import "fmt"
 
+/* ==================================== *\
+|*              Program Structs         *|
+\* ==================================== */
 
 type Position struct {
     x int
@@ -81,6 +83,10 @@ type Player struct {
     Radar 
 } {}
 */
+
+/* ==================================== *\
+|*              Main Program            *|
+\* ==================================== */
 
 func main() {
     // display menu
