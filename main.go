@@ -31,9 +31,11 @@ Fill out document, make video final clean up and formfitting.
 package main
 import "fmt"
 
-type Postion struct {
-    X int
-    Y int
+
+type Position struct {
+    x int
+    y int
+    isHit bool // NOTE not sure if this is best here
 }
 
 type ShipType string
@@ -45,9 +47,9 @@ const (
 )
 
 type Ship struct {
-    Postions = []Postion
-    Model string
-    IsSunk bool
+    positions []Position
+    model ShipType
+    isSunk bool
 }
 
 /*
@@ -66,10 +68,10 @@ So, to answer your question, a player gets:
 */
 
 type Player struct {
-    Name string
-    Ships = []Ships
-    Board = [10][10]int
-    Radar = [10][10]int
+    name string
+    ships []Ship
+    board [10][10]int
+    radar [10][10]int
 }
 /*
     p := {
