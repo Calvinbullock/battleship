@@ -140,7 +140,33 @@ func twoPlayerGame() {
     }
 }
 
-func playerMove(Player activePlayer, PLayer idlePlayer) {
+
+func displayBoard(player Player) {
+    board := player.board
+    radar := player.radar
+    displayBoardHalf(radar)
+    displayBoardHalf(board)
+}
+
+// Displays the players board and radar.
+func displayBoardHalf(board [10][10]int) {
+    // Print x-axis labels
+	fmt.Print(" ")
+	for i := 1; i <= len(board[0]); i++ {
+		fmt.Printf("%c ", rune(i+64)) // Convert number to uppercase letter
+	}
+	fmt.Println()
+
+	// Print board with y-axis labels
+	for i := range board {
+		fmt.Printf("%d ", i+1) // Print row number
+		for _, v := range board[i] {
+			fmt.Printf("%d ", v)
+		}
+		fmt.Println()
+	}
+}
+
 //          diaplay_player_board() // display player one board / radar
 //          take players move
 //
