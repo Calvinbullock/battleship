@@ -124,19 +124,20 @@ func onePlayerGame() {
     // create computer
 
     for true {
-        playerMove(player1, computer)
+        // playerMove(player1, computer)
     }
 }
 
 // twoPLayerGame contains the game loop for a two player game.
 func twoPlayerGame() {
     // create player 1
+    // TODO build players - have players place boats.
 
     // create player 2
 
     for true {
-        playerMove(player1, player2)
-        playerMove(player2, player1)
+        // playerMove(player1, player2)
+        // playerMove(player2, player1)
     }
 }
 
