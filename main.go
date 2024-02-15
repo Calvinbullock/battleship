@@ -167,12 +167,12 @@ func displayBoardHalf(board [10][10]int) {
 	}
 }
 
+func playerMove(activePlayer Player, idlePlayer Player) {
 //          diaplay_player_board() // display player one board / radar
 //          take players move
 //
 //          check_valid_move() // print hit or miss
-//          update_board()
-//          swtich player when ready
+//          update_board() // NOTE might put this in gameloop insted of here
 }
 
 func moveUpdate() {
