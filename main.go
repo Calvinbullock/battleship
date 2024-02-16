@@ -1,7 +1,6 @@
 // Calvin Bullock
 // BattleShip main file
 
-
 /* TODO
 Minimum project
 - two player
@@ -27,33 +26,6 @@ More computer player work and clean up, QA
 Fill out document, make video final clean up and formfitting.
 */
 
-package main
-import "fmt"
-
-/* ==================================== *\
-|*              Program Structs         *|
-\* ==================================== */
-
-type Position struct {
-    x int
-    y int
-    isHit bool // NOTE not sure if this is best here
-}
-
-type ShipType string
-const (
-  ShipTypeDestroyer  ShipType = "Destroyer"
-  ShipTypeBattleship ShipType = "Battleship"
-  ShipTypeSubmarine ShipType = "Submarine"
-  ShipTypeCarrier   ShipType = "Carrier"
-)
-
-type Ship struct {
-    positions []Position
-    model ShipType
-    isSunk bool
-}
-
 /*
 Carrier: 5 squares long, the largest and most valuable ship.
 Battleship: 4 squares long, a powerful ship.
@@ -69,20 +41,42 @@ So, to answer your question, a player gets:
 2 Destroyers
 */
 
+package main
+
+import (
+	"fmt"
+	"unicode"
+)
+
+/* ==================================== *\
+|*		    Consts	        *|
+\* ==================================== */
+var lettersRange = [...]rune{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'}
+
+
+/* ==================================== *\
+|*              Program Structs         *|
+\* ==================================== */
+
+type Position struct {
+    x int
+    y int
+    isHit bool // NOTE not sure if this is best here
+}
+
+type Ship struct {
+    positions []Position
+    model string
+    length int
+    isSunk bool
+}
+
 type Player struct {
     name string
     ships []Ship
     board [10][10]int
     radar [10][10]int
 }
-/*
-    p := {
-    Name string
-    Ships = []Ships
-    Board = [10][10]int
-    Radar 
-} {}
-*/
 
 /* ==================================== *\
 |*              Main Program            *|
@@ -122,11 +116,11 @@ func makeShipsList() []Ship {
     pos := Position{0, 0, false}
     
     // create defult ships with blank positions.
-    carrier := Ship{[]Position{pos, pos, pos, pos, pos}, "carrier", false}
-    battleShip := Ship{[]Position{pos, pos, pos, pos}, "battleShip", false}
-    cruiser := Ship{[]Position{pos, pos, pos}, "cruiser", false}
-    submarine := Ship{[]Position{pos, pos, pos}, "submarine", false}
-    destroyer := Ship{[]Position{pos, pos, pos}, "destryoer", false}
+    carrier := Ship{[]Position{pos, pos, pos, pos, pos}, "carrier", 5, false}
+    battleShip := Ship{[]Position{pos, pos, pos, pos}, "battleShip", 4, false}
+    cruiser := Ship{[]Position{pos, pos, pos}, "cruiser", 3, false}
+    submarine := Ship{[]Position{pos, pos, pos}, "submarine", 3, false}
+    destroyer := Ship{[]Position{pos, pos, pos}, "destryoer", 3, false}
 
     ships := []Ship{carrier, battleShip, cruiser, cruiser, submarine, submarine, destroyer, destroyer}
     return ships
@@ -143,6 +137,95 @@ func onePlayerGame() {
     }
 }
 
+// Helper to getPosition Parses a rune postion input to a matching int.
+//	-1 return means char not in list.
+func parseRuneInput(char rune) int {
+    upperChar := unicode.ToUpper(char)
+
+    for i, letter := range lettersRange {
+	if letter == upperChar {
+	    return i
+	}
+    }
+    // not in the letterRange
+    return -1
+} 
+
+// Take user input return a potions.
+func getPosition() Position {
+	pos := Position {}
+	var xRune rune
+	var xIn int
+	var yIn int
+
+    for true {
+	fmt.Println("give an x position (ex. A): ") // TODO this is a rune - pass to a func to convert to a int
+	fmt.Scanf("%c\n", &xRune)
+	xIn = parseRuneInput(xRune)
+
+	fmt.Println("give an y position (ex. 1): ")
+	fmt.Scanf("%d\n", &yIn)
+	yIn-- // match index 0
+
+	pos = Position{x: xIn, y: yIn, isHit: false}
+	fmt.Println("")
+	
+	// check that the postions are in bonds, -1 is parseRuneInput error return.
+	if (xIn < 10 && xIn > -1) && yIn != -1 {
+	    return pos
+	}
+	fmt.Println("ERROR: The position you entered was not on the board.")
+    }
+    return pos // Should never reach....
+}
+
+// check that the ship is placed in a valid postion.
+func isShipPositionValid(startPosition Position, endPosition Position, shipLength int) bool {
+    xDelta := startPosition.x + endPosition.x
+    yDelta := startPosition.y + endPosition.y
+
+    if xDelta != shipLength && yDelta == 0 {
+	fmt.Println("ERROR: Your ship is not the right length.")
+	return false
+    }
+    if yDelta != shipLength && xDelta == 0 {
+	fmt.Println("ERROR: Your ship is not the right length.")
+	return false
+    }
+    if yDelta == xDelta {
+	fmt.Println("ERROR: Your ship can not be diagnal.")
+	return false
+    }
+    return true
+}
+
+func placeShips(player *Player) {
+    //board := player.board
+    ships := player.ships
+    
+    // Loop through all of players ships
+    for _, ship := range ships {
+	
+	// loop until valid ship placement.
+	for true {
+	    fmt.Println(fmt.Sprintf("Place ship %s it is %d long.", ship.model, ship.length))
+
+	    // TODO need to valid that all pos are +-1 from each other.
+	    fmt.Println("Ship start Postion")
+	    shipStartPos := getPosition()
+	    fmt.Println("Ship end Postion")
+	    shipEndPos := getPosition()
+	    fmt.Println("")
+
+	    length := ship.length
+
+	    if isShipPositionValid(shipStartPos, shipEndPos, length) {
+		break
+	    }
+	}
+    }
+}
+
 // twoPLayerGame contains the game loop for a two player game.
 func twoPlayerGame() {
     // arrays in golang passed by value.
@@ -150,22 +233,32 @@ func twoPlayerGame() {
     radar := [10][10]int{}
     ships := makeShipsList()
 
-    // create player 1
-    p1 := Player{"player1", ships, board, radar}
-    p2 := Player{"player2", ships, board, radar}
+    // create players.
+    p1 := &Player{"player1", ships, board, radar}
+    p2 := &Player{"player2", ships, board, radar}
     
-    // create player 2
+    // TODO Place ships.
+    placeShips(p1)
 
+    // game loop.
     for true {
+	displayBoard(p1)
         playerMove(p1, p2)
+
+	displayBoard(p2)
         playerMove(p2, p1)
     }
 }
 
-func displayBoard(player Player) {
+// display a players radar and board.
+func displayBoard(player *Player) {
     board := player.board
     radar := player.radar
+    fmt.Print("")
+    fmt.Print("Radar")
     displayBoardHalf(radar)
+    fmt.Print("")
+    fmt.Print("Your Ships")
     displayBoardHalf(board)
 }
 
@@ -188,7 +281,7 @@ func displayBoardHalf(board [10][10]int) {
 	}
 }
 
-func playerMove(activePlayer Player, idlePlayer Player) {
+func playerMove(activePlayer *Player, idlePlayer *Player) {
 //          diaplay_player_board() // display player one board / radar
 //          take players move
 //
