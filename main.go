@@ -159,7 +159,7 @@ func getPosition() Position {
 	var yIn int
 
     for true {
-	fmt.Println("give an x position (ex. A): ") // TODO this is a rune - pass to a func to convert to a int
+	fmt.Println("give an x position (ex. A): ")
 	fmt.Scanf("%c\n", &xRune)
 	xIn = parseRuneInput(xRune)
 
@@ -181,8 +181,8 @@ func getPosition() Position {
 
 // check that the ship is placed in a valid postion.
 func isShipPositionValid(startPosition Position, endPosition Position, shipLength int) bool {
-    xDelta := startPosition.x + endPosition.x
-    yDelta := startPosition.y + endPosition.y
+    xDelta := startPosition.x + endPosition.x + 1
+    yDelta := startPosition.y + endPosition.y + 1
 
     if xDelta != shipLength && yDelta == 0 {
 	fmt.Println("ERROR: Your ship is not the right length.")
@@ -208,12 +208,12 @@ func placeShips(player *Player) {
 	
 	// loop until valid ship placement.
 	for true {
-	    fmt.Println(fmt.Sprintf("Place ship %s it is %d long.", ship.model, ship.length))
+	    fmt.Println(fmt.Sprintf("Place your %s it is %d long.", ship.model, ship.length))
 
 	    // TODO need to valid that all pos are +-1 from each other.
-	    fmt.Println("Ship start Postion")
+	    fmt.Println("Ship start Postion") // TODO pass into getPosition
 	    shipStartPos := getPosition()
-	    fmt.Println("Ship end Postion")
+	    fmt.Println("Ship end Postion") // TODO pass into getPosition
 	    shipEndPos := getPosition()
 	    fmt.Println("")
 
