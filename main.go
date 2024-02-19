@@ -278,11 +278,14 @@ func twoPlayerGame() {
 func displayBoard(player *Player) {
     board := player.board
     radar := player.radar
-    fmt.Print("")
-    fmt.Print("Radar")
+    playerName := player.name
+
+    fmt.Println("")
+    fmt.Println(playerName)
+    fmt.Println("Radar")
     displayBoardHalf(radar)
-    fmt.Print("")
-    fmt.Print("Your Ships")
+    fmt.Println("")
+    fmt.Println("Your Ships")
     displayBoardHalf(board)
 }
 
