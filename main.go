@@ -44,8 +44,8 @@ So, to answer your question, a player gets:
 package main
 
 import (
-	"fmt"
-	"unicode"
+    "fmt"
+    "unicode"
 )
 
 /* ==================================== *\
@@ -88,13 +88,13 @@ func main() {
     playerMode := displayMainMenu()
 
     if playerMode == 1 {
-        onePlayerGame()
+    	onePlayerGame()
 
     } else if playerMode == 2 {
-        twoPlayerGame()
+	    twoPlayerGame()
 
     } else if playerMode == 3 {
-        return
+    	return
 
     } 
 }
@@ -115,8 +115,8 @@ func displayMainMenu() int {
 // returns the list of default ships
 func makeShipsList() []Ship {
     pos := Position{0, 0, false}
-    
-    // create defult ships with blank positions.
+
+    // create default ships with blank positions.
     carrier := Ship{[]Position{pos, pos, pos, pos, pos}, "carrier", 5, false}
     battleShip := Ship{[]Position{pos, pos, pos, pos}, "battleShip", 4, false}
     cruiser := Ship{[]Position{pos, pos, pos}, "cruiser", 3, false}
@@ -134,11 +134,12 @@ func onePlayerGame() {
     // create computer
 
     for true {
-        // playerMove(player1, computer)
+	// playerMove(player1, computer)
     }
 }
 
-// Helper to getPosition Parses a rune postion input to a matching int.
+// Helper to getPosition takes the rune input and returns the index that rune is at
+//	in letterRange.
 //	-1 return means char not in list.
 func parseRuneInput(char rune) int {
     upperChar := unicode.ToUpper(char)
@@ -154,10 +155,10 @@ func parseRuneInput(char rune) int {
 
 // Take user input return a potions.
 func getPosition() Position {
-	pos := Position {}
-	var xRune rune
-	var xIn int
-	var yIn int
+    pos := Position {}
+    var xRune rune
+    var xIn int
+    var yIn int
 
     for true {
 	fmt.Println("give an x position (ex. A): ")
@@ -170,8 +171,8 @@ func getPosition() Position {
 
 	pos = Position{x: xIn, y: yIn, isHit: false}
 	fmt.Println("")
-	
-	// check that the postions are in bonds, -1 is parseRuneInput error return.
+
+	// check that the positions are in bonds, -1 is parseRuneInput error return.
 	if (xIn < 10 && xIn > -1) && yIn != -1 {
 	    return pos
 	}
@@ -180,7 +181,7 @@ func getPosition() Position {
     return pos // Should never reach....
 }
 
-// check that the ship is placed in a valid postion.
+// check that the ship is placed in a valid position.
 func isShipPositionValid(startPosition Position, endPosition Position, shipLength int) bool {
     xDelta := startPosition.x + endPosition.x + 1
     yDelta := startPosition.y + endPosition.y + 1
@@ -256,21 +257,22 @@ func twoPlayerGame() {
     }
 
     ships := makeShipsList()
-
+    
     // create players.
     p1 := &Player{"player1", ships, board, radar}
     p2 := &Player{"player2", ships, board, radar}
     
     // TODO Place ships.
+    displayBoard(p1)
     placeShips(p1)
 
     // game loop.
     for true {
 	displayBoard(p1)
-        playerMove(p1, p2)
+	playerMove(p1, p2)
 
 	displayBoard(p2)
-        playerMove(p2, p1)
+	playerMove(p2, p1)
     }
 }
 
@@ -309,11 +311,11 @@ func displayBoardHalf(board [10][10]rune) {
 }
 
 func playerMove(activePlayer *Player, idlePlayer *Player) {
-//          diaplay_player_board() // display player one board / radar
-//          take players move
-//
-//          check_valid_move() // print hit or miss
-//          update_board() // NOTE might put this in gameloop insted of here
+    // display_player_board() // display player one board / radar
+    // take players move
+
+    // check_valid_move() // print hit or miss
+    // update_board() // NOTE might put this in game loop instead of here
 }
 
 func moveUpdate() {
