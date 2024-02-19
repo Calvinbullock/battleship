@@ -289,6 +289,9 @@ func twoPlayerGame() {
     displayBoard(p1)
     placeShips(p1)
 
+    displayBoard(p2)
+    placeShips(p2)
+
     // game loop.
     for true {
 	displayBoard(p1)
