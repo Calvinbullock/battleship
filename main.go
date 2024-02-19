@@ -88,13 +88,13 @@ func main() {
     playerMode := displayMainMenu()
 
     if playerMode == 1 {
-    	onePlayerGame()
+	onePlayerGame()
 
     } else if playerMode == 2 {
-	    twoPlayerGame()
+	twoPlayerGame()
 
     } else if playerMode == 3 {
-    	return
+	return
 
     } 
 }
