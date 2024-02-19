@@ -117,11 +117,11 @@ func makeShipsList() []Ship {
     pos := Position{0, 0, false}
 
     // create default ships with blank positions.
-    carrier := Ship{[]Position{pos, pos, pos, pos, pos}, "carrier", 5, false}
-    battleShip := Ship{[]Position{pos, pos, pos, pos}, "battleShip", 4, false}
-    cruiser := Ship{[]Position{pos, pos, pos}, "cruiser", 3, false}
-    submarine := Ship{[]Position{pos, pos, pos}, "submarine", 3, false}
-    destroyer := Ship{[]Position{pos, pos, pos}, "destryoer", 3, false}
+    carrier := Ship{[]Position{pos, pos, pos, pos, pos}, 'A', "Aircraft carrier", 5, false}
+    battleShip := Ship{[]Position{pos, pos, pos, pos}, 'B', "BattleShip", 4, false}
+    cruiser := Ship{[]Position{pos, pos, pos}, 'C', "Cruiser", 3, false}
+    submarine := Ship{[]Position{pos, pos, pos}, 'S', "Submarine", 3, false}
+    destroyer := Ship{[]Position{pos, pos, pos}, 'D', "Destryoer", 3, false}
 
     ships := []Ship{carrier, battleShip, cruiser, cruiser, submarine, submarine, destroyer, destroyer}
     return ships
