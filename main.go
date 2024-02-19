@@ -66,6 +66,7 @@ type Position struct {
 
 type Ship struct {
     positions []Position
+    icon rune
     model string
     length int
     isSunk bool
@@ -74,8 +75,8 @@ type Ship struct {
 type Player struct {
     name string
     ships []Ship
-    board [10][10]int
-    radar [10][10]int
+    board [10][10]rune
+    radar [10][10]rune
 }
 
 /* ==================================== *\
@@ -229,8 +230,31 @@ func placeShips(player *Player) {
 // twoPLayerGame contains the game loop for a two player game.
 func twoPlayerGame() {
     // arrays in golang passed by value.
-    board := [10][10]int{}
-    radar := [10][10]int{}
+    board := [10][10]rune{
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+    }
+    radar := [10][10]rune{
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+    }
+
     ships := makeShipsList()
 
     // create players.
@@ -263,22 +287,22 @@ func displayBoard(player *Player) {
 }
 
 // Displays the players board and radar.
-func displayBoardHalf(board [10][10]int) {
+func displayBoardHalf(board [10][10]rune) {
     // Print x-axis labels
-	fmt.Print(" ")
-	for i := 1; i <= len(board[0]); i++ {
-		fmt.Printf("%c ", rune(i+64)) // Convert number to uppercase letter
+    fmt.Print("  ")
+    for i := 1; i <= len(board[0]); i++ {
+	fmt.Printf("%c ", rune(i+64)) // Convert number to uppercase letter
+    }
+    fmt.Println()
+
+    // Print board with y-axis labels
+    for i := range board {
+	fmt.Printf("%d ", i+1) // Print row number
+	for _, char := range board[i] {
+	    fmt.Printf("%c ", char)
 	}
 	fmt.Println()
-
-	// Print board with y-axis labels
-	for i := range board {
-		fmt.Printf("%d ", i+1) // Print row number
-		for _, v := range board[i] {
-			fmt.Printf("%d ", v)
-		}
-		fmt.Println()
-	}
+    }
 }
 
 func playerMove(activePlayer *Player, idlePlayer *Player) {
