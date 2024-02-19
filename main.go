@@ -236,7 +236,6 @@ func placeShips(player *Player) {
 	for true {
 	    fmt.Println(fmt.Sprintf("Place your %s it is %d long.", ship.model, ship.length))
 
-	    // TODO need to valid that all pos are +-1 from each other.
 	    fmt.Println("Ship start Postion") // TODO pass into getPosition
 	    shipStartPos = getPosition()
 	    fmt.Println("Ship end Postion") // TODO pass into getPosition
@@ -285,7 +284,7 @@ func twoPlayerGame() {
     p1 := &Player{"player1", ships, board, radar}
     p2 := &Player{"player2", ships, board, radar}
     
-    // TODO Place ships.
+    // Place ships.
     displayBoard(p1)
     placeShips(p1)
 
