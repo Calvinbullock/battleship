@@ -15,14 +15,16 @@ Extra
 ------ TODO
 DONE Finish planing doc
 DONE Install go-lang build / run hello world. Set up git repro.
-Set up boards, 2 for each user (player board, radar). Allow player modification and print them all out.
-Get clean print out of boards, allow switching between players boards.
-UI – start menu
-Ship placement and storage, sinking, display hits, missus, etc.
-Clean implement all rules and game over checks.
-Start computer player if time, if not work on fixing bugs and finishing minimum requirements.
-Find good algorithms used by battleship players for the computer.
-More computer player work and clean up, QA
+DONE Set up boards, 2 for each user (player board, radar). Allow player modification and print them all out.
+TODO Get clean print out of boards, allow switching between players boards.
+DONE UI – start menu
+DONE Ship placement and storage, 
+TODO sinking, display hits, missus, etc.
+TODO Clean implement all rules and game over checks.
+---------------------------
+TODO Start computer player if time, if not work on fixing bugs and finishing minimum requirements.
+TODO Find good algorithms used by battleship players for the computer.
+TODO More computer player work and clean up, QA
 Fill out document, make video final clean up and formfitting.
 */
 
