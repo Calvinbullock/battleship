@@ -201,30 +201,53 @@ func isShipPositionValid(startPosition Position, endPosition Position, shipLengt
     return true
 }
 
+func placeShipsOnBoard(player Player, ship Ship, posStart Position, posEnd Position) {
+    // added to board
+    xDelta := posStart.x - posEnd.x
+    yDelta := posStart.y - posEnd.y
+    icon := ship.icon
+    board := player.board
+    
+
+    // TODO need one that moves aong x and one for y
+    if xDelta != 0 {
+	for x := posStart.x; x <= posEnd.x; x++ {
+	    board[x][yDelta] = icon
+	}
+
+    } else if yDelta != 0 {
+	for y := posStart.y; y <= posEnd.y; y++ {
+	    board[xDelta][y] = icon
+	}
+    }
+    displayBoardHalf(board)
+}
+
 func placeShips(player *Player) {
     //board := player.board
     ships := player.ships
-    
+
     // Loop through all of players ships
     for _, ship := range ships {
-	
+	length := ship.length
+	shipEndPos := Position{0, 0, false}
+	shipStartPos := Position{0, 0, false}
 	// loop until valid ship placement.
 	for true {
 	    fmt.Println(fmt.Sprintf("Place your %s it is %d long.", ship.model, ship.length))
 
 	    // TODO need to valid that all pos are +-1 from each other.
 	    fmt.Println("Ship start Postion") // TODO pass into getPosition
-	    shipStartPos := getPosition()
+	    shipStartPos = getPosition()
 	    fmt.Println("Ship end Postion") // TODO pass into getPosition
-	    shipEndPos := getPosition()
+	    shipEndPos = getPosition()
 	    fmt.Println("")
-
-	    length := ship.length
 
 	    if isShipPositionValid(shipStartPos, shipEndPos, length) {
 		break
 	    }
 	}
+	placeShipsOnBoard(*player, ship, shipStartPos, shipEndPos)
     }
 }
 
