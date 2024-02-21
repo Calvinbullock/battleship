@@ -213,10 +213,6 @@ func placeShipsOnBoard(player *Player, ship Ship, posStart Position, posEnd Posi
     
     // NOTE x, y is backwards when sending to board -> [y][x] correct
     //	    place ship icons from startPos to endPos
-
-    fmt.Println(posStart.x, posStart. y)
-    fmt.Println(posEnd.x, posEnd. y)
-
     if xDelta != 0 {
 	for x := posStart.x; x <= posEnd.x; x++ {
 	    (*board)[posStart.y][x] = icon
