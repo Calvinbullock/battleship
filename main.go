@@ -210,16 +210,16 @@ func placeShipsOnBoard(player Player, ship Ship, posStart Position, posEnd Posit
     icon := ship.icon
     board := player.board
     
-
-    // TODO need one that moves aong x and one for y
+    // NOTE x, y is backwards when sending to board -> [y][x] correct
+    //	    place ship icons from startPos to endPos
     if xDelta != 0 {
 	for x := posStart.x; x <= posEnd.x; x++ {
-	    board[x][yDelta] = icon
+	    board[yDelta][x] = icon
 	}
 
     } else if yDelta != 0 {
 	for y := posStart.y; y <= posEnd.y; y++ {
-	    board[xDelta][y] = icon
+	    board[y][xDelta] = icon
 	}
     }
     displayBoardHalf(board)
