@@ -9,8 +9,9 @@ DONE Set up boards, 2 for each user (player board, radar). Allow player modifica
 TODO Get clean console print out of boards -blank slate-, allow switching between players boards.
 DONE UI – start menu
 DONE Ship placement and storage, 
-DONE sinking, display hits, missus, etc.
-TODO Clean implement all rules and game over checks.
+DONE display hits, missus, etc.
+TODO sinking
+TODO Clean up, implement all rules and game over checks.
 ---------------------------
 TODO Start computer player if time, if not work on fixing bugs and finishing minimum requirements.
 TODO Find good algorithms used by battleship players for the computer.
