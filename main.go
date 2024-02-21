@@ -2,45 +2,20 @@
 // BattleShip main file
 
 /* TODO
-Minimum project
-- two player
-- console boards (yours and radar)
-- player switching
-Extra
-- two player with computer player.
-- if a hit is found by computer.
-- check in points around the hit until sunk.
-- save state
-
 ------ TODO
 DONE Finish planing doc
 DONE Install go-lang build / run hello world. Set up git repro.
 DONE Set up boards, 2 for each user (player board, radar). Allow player modification and print them all out.
-TODO Get clean print out of boards, allow switching between players boards.
+TODO Get clean console print out of boards -blank slate-, allow switching between players boards.
 DONE UI – start menu
 DONE Ship placement and storage, 
-TODO sinking, display hits, missus, etc.
+DONE sinking, display hits, missus, etc.
 TODO Clean implement all rules and game over checks.
 ---------------------------
 TODO Start computer player if time, if not work on fixing bugs and finishing minimum requirements.
 TODO Find good algorithms used by battleship players for the computer.
 TODO More computer player work and clean up, QA
 Fill out document, make video final clean up and formfitting.
-*/
-
-/*
-Carrier: 5 squares long, the largest and most valuable ship.
-Battleship: 4 squares long, a powerful ship.
-Cruiser: 3 squares long, two of these are included in the fleet.
-Submarine: 3 squares long, two of these are included in the fleet.
-Destroyer: 2 squares long, the smallest and least valuable ship.
-So, to answer your question, a player gets:
-
-1 Carrier
-1 Battleship
-2 Cruisers
-2 Submarines
-2 Destroyers
 */
 
 package main
