@@ -171,6 +171,7 @@ func getPosition() Position {
 	fmt.Scanf("%d\n", &yIn)
 	yIn-- // match index 0
 
+	// set as pos object
 	pos = Position{x: xIn, y: yIn, isHit: false}
 	fmt.Println("")
 
