@@ -104,6 +104,7 @@ func makeShipsList() []Ship {
     return ships
 }
 
+// TODO this is empty until ready to build computer player.
 // onePLayerGame contains the game loop for a single player game.
 func onePlayerGame() {
     // create player 1
@@ -179,6 +180,7 @@ func isShipPositionValid(startPosition Position, endPosition Position, shipLengt
     return true
 }
 
+// This function updates the board to now have the ships stored in it.
 func placeShipsOnBoard(player *Player, ship Ship, posStart Position, posEnd Position) {
     // added to board
     xDelta := posStart.x - posEnd.x
@@ -201,8 +203,8 @@ func placeShipsOnBoard(player *Player, ship Ship, posStart Position, posEnd Posi
     displayBoardHalf((*board))
 }
 
+// Takes player input to place and validates it the places ships on board.
 func placeShips(player *Player) {
-    //board := player.board
     ships := player.ships
 
     // Loop through all of players ships
@@ -231,7 +233,7 @@ func placeShips(player *Player) {
     }
 }
 
-// twoPLayerGame contains the game loop for a two player game.
+// Contains the game loop for a two player game.
 func twoPlayerGame() {
     // arrays in golang passed by value.
     board := [10][10]rune{
