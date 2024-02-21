@@ -344,8 +344,8 @@ func displayBoardHalf(board [10][10]rune) {
 
 // This function updates the board and radar for hits and missis.
 func playerMove(activePlayer *Player, idlePlayer *Player) {
-    activeRadar := activePlayer.radar
-    idleBoard := idlePlayer.board
+    activeRadar := &activePlayer.radar
+    idleBoard := &idlePlayer.board
 
     for true { 
 	pos := getPosition()
@@ -353,8 +353,8 @@ func playerMove(activePlayer *Player, idlePlayer *Player) {
 	targetRune := idleBoard[pos.y][pos.x]
 
 	if targetRune == '~' {
-	    idleBoard[pos.y][pos.x] = 'M'
-	    activeRadar[pos.y][pos.x] = 'M'
+	    (*idleBoard)[pos.y][pos.x] = 'M'
+	    (*activeRadar)[pos.y][pos.x] = 'M'
 	    fmt.Println("You missed.")
 	    break
 
@@ -364,8 +364,8 @@ func playerMove(activePlayer *Player, idlePlayer *Player) {
 
 	} else {
 	    // valid  hit if in list of A, B, C, S
-	    idleBoard[pos.y][pos.x] = 'M'
-	    activeRadar[pos.y][pos.x] = 'M'
+	    (*idleBoard)[pos.y][pos.x] = 'M'
+	    (*activeRadar)[pos.y][pos.x] = 'M'
 	    fmt.Println("You hit a Ship!")
 	    break
 	}
