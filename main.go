@@ -249,6 +249,9 @@ func placeShips(player *Player) {
 	    shipEndPos = getPosition()
 	    fmt.Println("")
 
+	    // BUG this not quite right....
+	    //	    check other ships not there already
+	    //	    check that ship is proper length and width
 	    if isShipPositionValid(shipStartPos, shipEndPos, length) {
 		break
 	    }
