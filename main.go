@@ -338,15 +338,32 @@ func displayBoardHalf(board [10][10]rune) {
     }
 }
 
+// This function updates the board and radar for hits and missis.
 func playerMove(activePlayer *Player, idlePlayer *Player) {
-    // display_player_board() // display player one board / radar
-    // take players move
+    activeRadar := activePlayer.radar
+    idleBoard := idlePlayer.board
 
-    // check_valid_move() // print hit or miss
-    // update_board() // NOTE might put this in game loop instead of here
+    for true { 
+	pos := getPosition()
+	// NOTE x, y is backwards when sending to board -> [y][x] correct
+	targetRune := idleBoard[pos.y][pos.x]
+
+	if targetRune == '~' {
+	    idleBoard[pos.y][pos.x] = 'M'
+	    activeRadar[pos.y][pos.x] = 'M'
+	    fmt.Println("You missed.")
+	    break
+
+	} else if targetRune == 'M' || targetRune == 'H' {
+	    // Invalid spot already hit.
+	    fmt.Println("You already shot here.")
+
+	} else {
+	    // valid  hit if in list of A, B, C, S
+	    idleBoard[pos.y][pos.x] = 'M'
+	    activeRadar[pos.y][pos.x] = 'M'
+	    fmt.Println("You hit a Ship!")
+	    break
+	}
+    }   
 }
-
-func moveUpdate() {
-
-}
-
