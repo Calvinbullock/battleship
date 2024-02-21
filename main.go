@@ -204,26 +204,30 @@ func isShipPositionValid(startPosition Position, endPosition Position, shipLengt
     return true
 }
 
-func placeShipsOnBoard(player Player, ship Ship, posStart Position, posEnd Position) {
+func placeShipsOnBoard(player *Player, ship Ship, posStart Position, posEnd Position) {
     // added to board
     xDelta := posStart.x - posEnd.x
     yDelta := posStart.y - posEnd.y
     icon := ship.icon
-    board := player.board
+    board := &player.board
     
     // NOTE x, y is backwards when sending to board -> [y][x] correct
     //	    place ship icons from startPos to endPos
+
+    fmt.Println(posStart.x, posStart. y)
+    fmt.Println(posEnd.x, posEnd. y)
+
     if xDelta != 0 {
 	for x := posStart.x; x <= posEnd.x; x++ {
-	    board[yDelta][x] = icon
+	    (*board)[posStart.y][x] = icon
 	}
 
     } else if yDelta != 0 {
 	for y := posStart.y; y <= posEnd.y; y++ {
-	    board[y][xDelta] = icon
+	    (*board)[y][posStart.x] = icon
 	}
     }
-    displayBoardHalf(board)
+    displayBoardHalf((*board))
 }
 
 func placeShips(player *Player) {
@@ -249,7 +253,7 @@ func placeShips(player *Player) {
 		break
 	    }
 	}
-	placeShipsOnBoard(*player, ship, shipStartPos, shipEndPos)
+	placeShipsOnBoard(player, ship, shipStartPos, shipEndPos)
     }
 }
 
