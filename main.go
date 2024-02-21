@@ -10,7 +10,7 @@ TODO Get clean console print out of boards -blank slate-, allow switching betwee
 DONE UI – start menu
 DONE Ship placement and storage, 
 DONE display hits, missus, etc.
-TODO sinking
+TODO display when ship sunk 
 TODO Clean up, implement all rules and game over checks.
 ---------------------------
 TODO Start computer player if time, if not work on fixing bugs and finishing minimum requirements.
