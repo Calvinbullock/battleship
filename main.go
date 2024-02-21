@@ -1,8 +1,8 @@
 // Calvin Bullock
 // BattleShip main file
 
-/* TODO
------- TODO
+/* 
+------ 
 DONE Finish planing doc
 DONE Install go-lang build / run hello world. Set up git repro.
 DONE Set up boards, 2 for each user (player board, radar). Allow player modification and print them all out.
