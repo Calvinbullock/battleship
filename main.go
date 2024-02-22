@@ -246,7 +246,7 @@ func twoPlayerGame() {
     // TODO move this so it can be ued by twoPlayerGame AND onePlayerGame
     point := BoardPoint {icon:'~'} 
     // arrays in golang passed by value.
-    claenBoard := [10][10]BoardPoint{
+    cleanBoard := [10][10]BoardPoint{
 	{point, point, point, point, point, point, point, point, point, point},
 	{point, point, point, point, point, point, point, point, point, point},
 	{point, point, point, point, point, point, point, point, point, point},
@@ -263,8 +263,8 @@ func twoPlayerGame() {
     ships := makeShipsList()
     
     // create players.
-    p1 := &Player{"player1", ships, claenBoard, claenBoard}
-    p2 := &Player{"player2", ships, claenBoard, claenBoard}
+    p1 := &Player{"player1", ships, cleanBoard, cleanBoard}
+    p2 := &Player{"player2", ships, cleanBoard, cleanBoard}
     
     // Place ships.
     displayBoard(p1)
@@ -346,7 +346,7 @@ func playerMove(activePlayer *Player, idlePlayer *Player) {
 	    posShip := (*activeRadar)[pos.y][pos.x].shipPointer
 
 	    if posShip.length == posShip.damageTaken {
-		fmt.Printf("You sunk %s", posShip.model)
+		fmt.Printf("You sunk an enemy %s!\n", posShip.model)
 	    } else {
 		posShip.damageTaken++
 	    }
@@ -355,3 +355,41 @@ func playerMove(activePlayer *Player, idlePlayer *Player) {
 	}
     }   
 }
+
+/* =======================================
+|		Testing
+========================================== */
+
+func mainOFF() {
+    ships := makeShipsList()
+    point := BoardPoint {icon:'~'}
+    pointAir := BoardPoint {ships[1].icon, &ships[1]} // aircraft carrier
+
+    cleanBoard := [10][10]BoardPoint{
+	{pointAir, pointAir, pointAir, pointAir, pointAir, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+    }
+    
+    // create players.
+    p1 := &Player{"player1", ships, cleanBoard, cleanBoard}
+    p2 := &Player{"player2", ships, cleanBoard, cleanBoard}
+    
+    testingPlayerMove(p1, p2)
+
+}
+
+func testingPlayerMove(p1 *Player, p2 *Player) {
+    for true {
+	playerMove(p1, p2) 
+    }
+}
+
+
