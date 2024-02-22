@@ -52,7 +52,7 @@ type Ship struct {
     icon rune
     model string
     length int
-    isSunk bool
+    damageTaken int
 }
 
 type Player struct {
@@ -100,11 +100,11 @@ func makeShipsList() []Ship {
     pos := Position{0, 0}
 
     // create default ships with blank positions.
-    carrier := Ship{[]Position{pos, pos, pos, pos, pos}, 'A', "Aircraft carrier", 5, false}
-    battleShip := Ship{[]Position{pos, pos, pos, pos}, 'B', "BattleShip", 4, false}
-    cruiser := Ship{[]Position{pos, pos, pos}, 'C', "Cruiser", 3, false}
-    submarine := Ship{[]Position{pos, pos, pos}, 'S', "Submarine", 3, false}
-    destroyer := Ship{[]Position{pos, pos, pos}, 'D', "Destryoer", 3, false}
+    carrier := Ship{[]Position{pos, pos, pos, pos, pos}, 'A', "Aircraft carrier", 5, 0}
+    battleShip := Ship{[]Position{pos, pos, pos, pos}, 'B', "BattleShip", 4, 0}
+    cruiser := Ship{[]Position{pos, pos, pos}, 'C', "Cruiser", 3, 0}
+    submarine := Ship{[]Position{pos, pos, pos}, 'S', "Submarine", 3, 0}
+    destroyer := Ship{[]Position{pos, pos, pos}, 'D', "Destryoer", 3, 0}
 
     ships := []Ship{carrier, battleShip, cruiser, cruiser, submarine, submarine, destroyer, destroyer}
     return ships
@@ -187,7 +187,7 @@ func isShipPositionValid(startPosition Position, endPosition Position, shipLengt
 }
 
 // This function updates the board to now have the ships stored in it.
-func placeShipsOnBoard(player *Player, ship Ship, posStart Position, posEnd Position) {
+func placeShipsOnBoard(player *Player, ship *Ship, posStart Position, posEnd Position) {
     // added to board
     xDelta := posStart.x - posEnd.x
     yDelta := posStart.y - posEnd.y
@@ -199,12 +199,13 @@ func placeShipsOnBoard(player *Player, ship Ship, posStart Position, posEnd Posi
     if xDelta != 0 {
 	for x := posStart.x; x <= posEnd.x; x++ {
 	    (*board)[posStart.y][x].icon = icon
-	    // TODO cahgne this to get and change the postion at y, x and change the icon and the pointer
+	    (*board)[posStart.y][x].shipPointer = ship
 	}
 
     } else if yDelta != 0 {
 	for y := posStart.y; y <= posEnd.y; y++ {
 	    (*board)[y][posStart.x].icon = icon
+	    (*board)[y][posStart.x].shipPointer = ship
 	}
     }
     displayBoardHalf((*board))
@@ -236,12 +237,13 @@ func placeShips(player *Player) {
 		break
 	    }
 	}
-	placeShipsOnBoard(player, ship, shipStartPos, shipEndPos)
+	placeShipsOnBoard(player, &ship, shipStartPos, shipEndPos)
     }
 }
 
 // Contains the game loop for a two player game.
 func twoPlayerGame() {
+    // TODO move this so it can be ued by twoPlayerGame AND onePlayerGame
     point := BoardPoint {icon:'~'} 
     // arrays in golang passed by value.
     claenBoard := [10][10]BoardPoint{
@@ -340,6 +342,15 @@ func playerMove(activePlayer *Player, idlePlayer *Player) {
 	    (*idleBoard)[pos.y][pos.x].icon = 'M'
 	    (*activeRadar)[pos.y][pos.x].icon = 'M'
 	    fmt.Println("You hit a Ship!")
+
+	    posShip := (*activeRadar)[pos.y][pos.x].shipPointer
+
+	    if posShip.length == posShip.damageTaken {
+		fmt.Printf("You sunk %s", posShip.model)
+	    } else {
+		posShip.damageTaken++
+	    }
+
 	    break
 	}
     }   
