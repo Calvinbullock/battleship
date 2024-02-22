@@ -39,7 +39,12 @@ var lettersRange = [...]rune{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'}
 type Position struct {
     x int
     y int
-    isHit bool // NOTE not sure if this is best here
+}
+
+// This is what the board stores
+type BoardPoint struct {
+    icon rune
+    shipPointer *Ship
 }
 
 type Ship struct {
@@ -53,8 +58,8 @@ type Ship struct {
 type Player struct {
     name string
     ships []Ship
-    board [10][10]rune
-    radar [10][10]rune
+    board [10][10]BoardPoint
+    radar [10][10]BoardPoint
 }
 
 /* ==================================== *\
@@ -92,7 +97,7 @@ func displayMainMenu() int {
 
 // returns the list of default ships
 func makeShipsList() []Ship {
-    pos := Position{0, 0, false}
+    pos := Position{0, 0}
 
     // create default ships with blank positions.
     carrier := Ship{[]Position{pos, pos, pos, pos, pos}, 'A', "Aircraft carrier", 5, false}
@@ -149,7 +154,7 @@ func getPosition() Position {
 	yIn-- // match index 0
 
 	// set as pos object
-	pos = Position{x: xIn, y: yIn, isHit: false}
+	pos = Position{x: xIn, y: yIn}
 	fmt.Println("")
 
 	// check that the positions are in bonds, -1 is parseRuneInput error return.
@@ -193,12 +198,13 @@ func placeShipsOnBoard(player *Player, ship Ship, posStart Position, posEnd Posi
     //	    place ship icons from startPos to endPos
     if xDelta != 0 {
 	for x := posStart.x; x <= posEnd.x; x++ {
-	    (*board)[posStart.y][x] = icon
+	    (*board)[posStart.y][x].icon = icon
+	    // TODO cahgne this to get and change the postion at y, x and change the icon and the pointer
 	}
 
     } else if yDelta != 0 {
 	for y := posStart.y; y <= posEnd.y; y++ {
-	    (*board)[y][posStart.x] = icon
+	    (*board)[y][posStart.x].icon = icon
 	}
     }
     displayBoardHalf((*board))
@@ -211,8 +217,8 @@ func placeShips(player *Player) {
     // Loop through all of players ships
     for _, ship := range ships {
 	length := ship.length
-	shipEndPos := Position{0, 0, false}
-	shipStartPos := Position{0, 0, false}
+	shipEndPos := Position{x:0, y:0,}
+	shipStartPos := Position{x:0, y:0,}
 	// loop until valid ship placement.
 	for true {
 	    fmt.Println(fmt.Sprintf("Place your %s it is %d long.", ship.model, ship.length))
@@ -236,37 +242,27 @@ func placeShips(player *Player) {
 
 // Contains the game loop for a two player game.
 func twoPlayerGame() {
+    point := BoardPoint {icon:'~'} 
     // arrays in golang passed by value.
-    board := [10][10]rune{
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
+    claenBoard := [10][10]BoardPoint{
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
     }
-    radar := [10][10]rune{
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-	{'~', '~', '~', '~', '~', '~', '~', '~', '~', '~'},
-    }
+    
 
     ships := makeShipsList()
     
     // create players.
-    p1 := &Player{"player1", ships, board, radar}
-    p2 := &Player{"player2", ships, board, radar}
+    p1 := &Player{"player1", ships, claenBoard, claenBoard}
+    p2 := &Player{"player2", ships, claenBoard, claenBoard}
     
     // Place ships.
     displayBoard(p1)
@@ -301,7 +297,7 @@ func displayBoard(player *Player) {
 }
 
 // Displays the players board and radar.
-func displayBoardHalf(board [10][10]rune) {
+func displayBoardHalf(board [10][10]BoardPoint) {
     // Print x-axis labels
     fmt.Print("  ")
     for i := 1; i <= len(board[0]); i++ {
@@ -312,8 +308,8 @@ func displayBoardHalf(board [10][10]rune) {
     // Print board with y-axis labels
     for i := range board {
 	fmt.Printf("%d ", i+1) // Print row number
-	for _, char := range board[i] {
-	    fmt.Printf("%c ", char)
+	for _, point := range board[i] {
+	    fmt.Printf("%c ", point.icon)
 	}
 	fmt.Println()
     }
@@ -327,11 +323,11 @@ func playerMove(activePlayer *Player, idlePlayer *Player) {
     for true { 
 	pos := getPosition()
 	// NOTE x, y is backwards when sending to board -> [y][x] correct
-	targetRune := idleBoard[pos.y][pos.x]
+	targetRune := idleBoard[pos.y][pos.x].icon
 
 	if targetRune == '~' {
-	    (*idleBoard)[pos.y][pos.x] = 'M'
-	    (*activeRadar)[pos.y][pos.x] = 'M'
+	    (*idleBoard)[pos.y][pos.x].icon = 'M'
+	    (*activeRadar)[pos.y][pos.x].icon = 'M'
 	    fmt.Println("You missed.")
 	    break
 
@@ -341,8 +337,8 @@ func playerMove(activePlayer *Player, idlePlayer *Player) {
 
 	} else {
 	    // valid  hit if in list of A, B, C, S
-	    (*idleBoard)[pos.y][pos.x] = 'M'
-	    (*activeRadar)[pos.y][pos.x] = 'M'
+	    (*idleBoard)[pos.y][pos.x].icon = 'M'
+	    (*activeRadar)[pos.y][pos.x].icon = 'M'
 	    fmt.Println("You hit a Ship!")
 	    break
 	}
