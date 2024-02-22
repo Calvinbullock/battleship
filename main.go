@@ -10,8 +10,10 @@ TODO Get clean console print out of boards -blank slate-, allow switching betwee
 DONE UI – start menu
 DONE Ship placement and storage, 
 DONE display hits, missus, etc.
-TODO display when ship sunk 
+DONE display when ship sunk 
 TODO Clean up, implement all rules and game over checks.
+	- ships can't be ontop of other ships
+	- test all function cases
 ---------------------------
 TODO Start computer player if time, if not work on fixing bugs and finishing minimum requirements.
 TODO Find good algorithms used by battleship players for the computer.
