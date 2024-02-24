@@ -6,7 +6,7 @@
 DONE Finish planing doc
 DONE Install go-lang build / run hello world. Set up git repro.
 DONE Set up boards, 2 for each user (player board, radar). Allow player modification and print them all out.
-TODO Get clean console print out of boards -blank slate-, allow switching between players boards.
+KINDA Get clean console print out of boards -blank slate-, allow switching between players boards.
 DONE UI – start menu
 DONE Ship placement and storage, 
 DONE display hits, missus, etc.
@@ -325,6 +325,7 @@ func displayBoard(player *Player) {
 
 // Displays the players board and radar.
 func displayBoardHalf(board [10][10]BoardPoint) {
+    // TODO this needs a fix for the 10 being slightly out of alighnment....
     // Print x-axis labels
     fmt.Print("  ")
     for i := 1; i <= len(board[0]); i++ {
@@ -334,7 +335,7 @@ func displayBoardHalf(board [10][10]BoardPoint) {
 
     // Print board with y-axis labels
     for i := range board {
-	fmt.Printf("%d ", i+1) // Print row number
+	fmt.Printf("%2d ", i+1) // Print row number
 	for _, point := range board[i] {
 	    fmt.Printf("%c ", point.icon)
 	}
