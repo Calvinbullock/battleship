@@ -18,6 +18,9 @@ language/frameworks/libraries: go-lang
 # Future Work
 
 {Make a list of things that you need to fix, improve, and add in the future.}
-* add a computerized player.
+* Better user input handaling for ship placement
+* start computerized seconed player
+
+
 
 
