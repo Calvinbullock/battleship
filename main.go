@@ -326,7 +326,7 @@ func displayBoard(player *Player) {
 // Displays the players board and radar.
 func displayBoardHalf(board [10][10]BoardPoint) {
     // Print x-axis labels
-    fmt.Print("  ")
+    fmt.Print("   ")
     for i := 1; i <= len(board[0]); i++ {
 	fmt.Printf("%c ", rune(i+64)) // Convert number to uppercase letter
     }
