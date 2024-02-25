@@ -189,18 +189,20 @@ func getPosition() Position {
 
 // check that the ship is placed in a valid position.
 func isShipPositionValid(startPosition Position, endPosition Position, shipLength int) bool {
-    xDelta := startPosition.x + endPosition.x + 1
-    yDelta := startPosition.y + endPosition.y + 1
+    xDelta := startPosition.x - endPosition.x
+    yDelta := startPosition.y - endPosition.y
+    fmt.Println(xDelta, yDelta, "DEBUG L194")
+    shipLength = (shipLength-1) * (-1)
 
-    if xDelta != shipLength && yDelta == 0 {
+    if xDelta != shipLength && (yDelta == 1 || yDelta == 0) {
 	fmt.Println("ERROR: Your ship is not the right length.")
 	return false
     }
-    if yDelta != shipLength && xDelta == 0 {
+    if yDelta != shipLength && (xDelta == 1 || xDelta == 0){
 	fmt.Println("ERROR: Your ship is not the right length.")
 	return false
     }
-    if yDelta == xDelta {
+    if yDelta == xDelta || (xDelta > 1 && yDelta > 1) {
 	fmt.Println("ERROR: Your ship can not be diagnal.")
 	return false
     }
