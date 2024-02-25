@@ -3,7 +3,7 @@
 This is based off the game battleship. I am building it to learn go-lang but I also am hopeing to
     play around with about computerized players.
 
-[Software Demo Video - dead]()
+[Software Demo Video](https://youtu.be/NTacSqyuzAA)
 
 # Development Environment
 
