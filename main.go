@@ -1,16 +1,16 @@
 // Calvin Bullock
 // BattleShip main file
 
-/* 
------- 
+/*
+------
 DONE Finish planing doc
 DONE Install go-lang build / run hello world. Set up git repro.
 DONE Set up boards, 2 for each user (player board, radar). Allow player modification and print them all out.
 KINDA Get clean console print out of boards -blank slate-, allow switching between players boards.
 DONE UI – start menu
-DONE Ship placement and storage, 
+DONE Ship placement and storage,
 DONE display hits, missus, etc.
-DONE display when ship sunk 
+DONE display when ship sunk
 TODO Clean up, implement all rules and game over checks.
 	- ships can't be ontop of other ships
 	- test all function cases
