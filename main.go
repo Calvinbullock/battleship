@@ -325,7 +325,6 @@ func displayBoard(player *Player) {
 
 // Displays the players board and radar.
 func displayBoardHalf(board [10][10]BoardPoint) {
-    // TODO this needs a fix for the 10 being slightly out of alighnment....
     // Print x-axis labels
     fmt.Print("  ")
     for i := 1; i <= len(board[0]); i++ {
