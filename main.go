@@ -24,11 +24,11 @@ Fill out document, make video final clean up and formfitting.
 package main
 
 import (
-    "fmt"
-    "unicode"
-    "os/exec"
-    "os"
-    "runtime"
+	"fmt"
+	"os"
+	"os/exec"
+	"runtime"
+	"unicode"
 )
 
 /* ==================================== *\
