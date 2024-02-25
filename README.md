@@ -11,13 +11,11 @@ IDEs / editers: Neovim.
 language/frameworks/libraries: go-lang
 
 # Useful Websites
-
-{Make a list of websites that you found helpful in this project}
 * [google Go style guides](https://google.github.io/styleguide/go/)
+* [Go-lang Docs ](https://go.dev/doc/)
 
 # Future Work
-
-{Make a list of things that you need to fix, improve, and add in the future.}
+* NEED to fix null pointer bug
 * Better user input handaling for ship placement
 * start computerized seconed player
 
