@@ -80,6 +80,7 @@ func main() {
 
     } else if playerMode == 2 {
 	twoPlayerGame()
+	//testingTwoPlayerGame()
 
     } else if playerMode == 3 {
 	return
@@ -191,7 +192,6 @@ func getPosition() Position {
 func isShipPositionValid(startPosition Position, endPosition Position, shipLength int) bool {
     xDelta := startPosition.x - endPosition.x
     yDelta := startPosition.y - endPosition.y
-    fmt.Println(xDelta, yDelta, "DEBUG L194")
     shipLength = (shipLength-1) * (-1)
 
     if xDelta != shipLength && (yDelta == 1 || yDelta == 0) {
@@ -222,7 +222,7 @@ func placeShipsOnBoard(player *Player, ship *Ship, posStart Position, posEnd Pos
     if xDelta != 0 {
 	for x := posStart.x; x <= posEnd.x; x++ {
 	    (*board)[posStart.y][x].icon = icon
-	    (*board)[posStart.y][x].shipPointer = ship
+	    (*board)[posStart.y][x].shipPointer = ship // BUG here is i think where the root of the seg fault  is
 	}
 
     } else if yDelta != 0 {
@@ -268,7 +268,7 @@ func placeShips(player *Player) {
 func twoPlayerGame() {
     // TODO move from this line down to player declerations, so it can be used by 
     //	    twoPlayerGame AND onePlayerGame func's
-    point := BoardPoint {icon:'~'} 
+    point := BoardPoint {icon:'~', shipPointer: nil} 
     ships := makeShipsList()
 
     // arrays in golang passed by value.
@@ -294,19 +294,26 @@ func twoPlayerGame() {
     placeShips(p1)
     clearTerminal()
 
+    // TODO add waits here
     displayBoard(p2)
-    placeShips(p2)
+    //placeShips(p2)
     clearTerminal()
 
     // game loop.
     for true {
 	displayBoard(p1)
 	playerMove(p1, p2)
+	// TODO add waits here
 	clearTerminal()
+	
+	// TODO add a input here that says to press enter when plyer 2 is ready
 
 	displayBoard(p2)
 	playerMove(p2, p1)
+	// TODO add waits here
 	clearTerminal()
+	
+	// TODO add a input here that says to press enter when plyer 1 is ready
     }
 }
 
@@ -350,6 +357,7 @@ func playerMove(activePlayer *Player, idlePlayer *Player) {
     idleBoard := &idlePlayer.board
 
     for true { 
+	fmt.Println("Enter fireing location.")
 	pos := getPosition()
 	// NOTE x, y is backwards when sending to board -> [y][x] correct
 	targetRune := idleBoard[pos.y][pos.x].icon
@@ -366,19 +374,30 @@ func playerMove(activePlayer *Player, idlePlayer *Player) {
 
 	} else {
 	    // valid  hit if in list of A, B, C, S
-	    (*idleBoard)[pos.y][pos.x].icon = 'M'
-	    (*activeRadar)[pos.y][pos.x].icon = 'M'
+	    (*idleBoard)[pos.y][pos.x].icon = 'H'
+	    (*activeRadar)[pos.y][pos.x].icon = 'H'
 	    fmt.Println("You hit a Ship!")
 
-	    posShip := (*activeRadar)[pos.y][pos.x].shipPointer
 
-	    if posShip.length == posShip.damageTaken {
-		fmt.Printf("You sunk an enemy %s!\n", posShip.model)
+	    if &activeRadar[pos.y][pos.x] == nil {
+	    // if Pointer is nil, warn
+
+		fmt.Println("DEBUG L381")
+		posShip := (*activeRadar)[pos.y][pos.x].shipPointer
+
+		if posShip.length == posShip.damageTaken {
+		    fmt.Println("DEBUG L385")
+		    fmt.Printf("You sunk an enemy %s!\n", posShip.model)
+		} else {
+		    fmt.Println("DEBUG L388")
+		    posShip.damageTaken++
+		}
+		fmt.Println("DEBUG L391")
+		break
 	    } else {
-		posShip.damageTaken++
+		fmt.Println("nil L398")
+		break
 	    }
-
-	    break
 	}
     }   
 }
@@ -418,5 +437,56 @@ func testingPlayerMove(p1 *Player, p2 *Player) {
 	playerMove(p1, p2) 
     }
 }
+
+
+// Contains the game loop for a two player game.
+func testingTwoPlayerGame() {
+    // TODO move from this line down to player declerations, so it can be used by 
+    //	    twoPlayerGame AND onePlayerGame func's
+    
+    ships := makeShipsList()
+    point := BoardPoint {icon:'~'}
+    pointAir := BoardPoint {ships[1].icon, &ships[1]} // aircraft carrier
+
+    cleanBoard := [10][10]BoardPoint{
+	{pointAir, pointAir, pointAir, pointAir, pointAir, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+	{point, point, point, point, point, point, point, point, point, point},
+    }
+
+    // create players.
+    p1 := &Player{"player1", ships, cleanBoard, cleanBoard}
+    p2 := &Player{"player2", ships, cleanBoard, cleanBoard}
+    
+    // TODO add waits here
+    // Place ships.
+    displayBoard(p1)
+    //placeShips(p1)
+    clearTerminal()
+    
+    // TODO add waits here
+    displayBoard(p2)
+    //placeShips(p2)
+    clearTerminal()
+
+    // game loop.
+    for true {
+	displayBoard(p1)
+	playerMove(p1, p2)
+	clearTerminal()
+
+	displayBoard(p2)
+	playerMove(p2, p1)
+	clearTerminal()
+    }
+}
+
 
 
